@@ -10,6 +10,7 @@ from pytorch_lightning import seed_everything
 from pytorch_lightning.trainer import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, Callback, LearningRateMonitor
 from pytorch_lightning.utilities import rank_zero_only
+import wandb
 
 from taming.data.utils import custom_collate
 
@@ -231,7 +232,7 @@ class ImageLogger(Callback):
 
     @rank_zero_only
     def _wandb(self, pl_module, images, batch_idx, split):
-        raise ValueError("No way wandb")
+        # raise ValueError("No way wandb")
         grids = dict()
         for k in images:
             grid = torchvision.utils.make_grid(images[k])
@@ -562,6 +563,7 @@ if __name__ == "__main__":
         # run
         if opt.train:
             try:
+                # breakpoint()
                 trainer.fit(model, data)
             except Exception:
                 melk()

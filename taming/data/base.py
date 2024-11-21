@@ -19,7 +19,6 @@ class ConcatDatasetWithIndex(ConcatDataset):
             sample_idx = idx - self.cumulative_sizes[dataset_idx - 1]
         return self.datasets[dataset_idx][sample_idx], dataset_idx
 
-
 class ImagePaths(Dataset):
     def __init__(self, paths, size=None, random_crop=False, labels=None):
         self.size = size
@@ -43,6 +42,7 @@ class ImagePaths(Dataset):
         return self._length
 
     def preprocess_image(self, image_path):
+        print(f'image_path: {image_path}')
         image = Image.open(image_path)
         if not image.mode == "RGB":
             image = image.convert("RGB")
