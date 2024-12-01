@@ -16,24 +16,24 @@ class CustomBase(Dataset):
         return len(self.data)
 
     def __getitem__(self, i):
-        print(f'here {i}')
+        # print(f'here {i}')
         example = self.data[i]
         return example
 
 class CustomTrain(CustomBase):
     def __init__(self, size, training_images_list_file):
         # breakpoint()
-        print(f'here, {training_images_list_file}')
+        # print(f'here, {training_images_list_file}')
         super().__init__()
         with open(training_images_list_file, "r") as f:
             paths = f.read().splitlines()
-        self.data = EEGPaths(paths=paths, size=size)
+        self.data = BreathingPaths(paths=paths, size=size)
 
 class CustomTest(CustomBase):
     def __init__(self, size, test_images_list_file):
         super().__init__()
         with open(test_images_list_file, "r") as f:
             paths = f.read().splitlines()
-        self.data = EEGPaths(paths=paths, size=size)
+        self.data = BreathingPaths(paths=paths, size=size)
 
 

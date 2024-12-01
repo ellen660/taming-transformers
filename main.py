@@ -406,7 +406,7 @@ if __name__ == "__main__":
             name = ""
         nowname = now+name+opt.postfix
         logdir = os.path.join("logs", nowname)
-
+    # breakpoint()
     ckptdir = os.path.join(logdir, "checkpoints")
     cfgdir = os.path.join(logdir, "configs")
     seed_everything(opt.seed)
@@ -465,6 +465,7 @@ if __name__ == "__main__":
         default_logger_cfg = default_logger_cfgs["testtube"]
         logger_cfg = lightning_config.logger or OmegaConf.create()
         logger_cfg = OmegaConf.merge(default_logger_cfg, logger_cfg)
+        # breakpoint()
         trainer_kwargs["logger"] = instantiate_from_config(logger_cfg)
 
         # modelcheckpoint - use TrainResult/EvalResult(checkpoint_on=metric) to
@@ -564,8 +565,12 @@ if __name__ == "__main__":
         if opt.train:
             try:
                 # breakpoint()
+                #print number model parameters
+                num_params = sum(p.numel() for p in model.parameters())
+                print(f"Number of model parameters: {num_params}")
                 trainer.fit(model, data)
             except Exception:
+                # breakpoint()
                 melk()
                 raise
         if not opt.no_test and not trainer.interrupted:
